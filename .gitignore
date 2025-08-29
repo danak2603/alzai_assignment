@@ -23,7 +23,7 @@ notebooks/.ipynb_checkpoints/
 .DS_Store
 
 # --- Data & artifacts (generated at runtime; do not commit) ---
-data/
+data/*
 !data/.gitkeep
 
 # --- Logs / cache ---
