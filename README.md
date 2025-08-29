@@ -174,3 +174,20 @@ data/clinical_synth_v1/artifacts_v1/slice_metrics_with_lift_<label_mode>_<val_ye
 - **Feature footprint**: run Part 4 with `--mode diet` (or set in code) for a leaner feature set.
 - **Model**: `HistGradientBoostingClassifier` (scikit-learn) with early stopping; easy to swap to other classifiers.
 
+### Experiment Tracking (MLflow) 
+
+Training runs are logged to `./mlruns`.
+
+Start UI:
+```bash
+mlflow ui --backend-store-uri mlruns --host 127.0.0.1 --port 5000
+```
+
+Log a run (local or Docker):
+
+```bash
+python -m src.part5_train_hgb
+# or:
+docker compose build train
+docker compose run --rm train
+```

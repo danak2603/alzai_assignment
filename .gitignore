@@ -25,6 +25,7 @@ notebooks/.ipynb_checkpoints/
 # --- Data & artifacts (generated at runtime; do not commit) ---
 data/*
 !data/.gitkeep
+mlruns/
 
 # --- Logs / cache ---
 *.log

@@ -8,6 +8,7 @@ services:
     image: t2d-train:latest
     volumes:
       - ./data:/app/data
+      - ./mlruns:/app/mlruns
     command: ["python", "-m", "src.part5_train_hgb"]
 
   serve:
