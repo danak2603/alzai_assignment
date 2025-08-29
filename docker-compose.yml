@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.training
+    image: t2d-train:latest
+    volumes:
+      - ./data:/app/data
+    command: ["python", "-m", "src.part5_train_hgb"]
+
+  serve:
+    build:
+      context: .
+      dockerfile: Dockerfile.serving
+    image: t2d-serve:latest
+    environment:
+      MODEL_ART_PATH: /app/data/clinical_synth_v1/artifacts_v1/t2d_hgb_model_v1.joblib
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+

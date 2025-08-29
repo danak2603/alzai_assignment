@@ -1,0 +1,25 @@
+# Build an image that runs the training pipeline and writes artifacts under /app/data
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+# System deps: OpenMP runtime for scikit-learn wheels
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python requirements for training (must match your venv versions)
+COPY requirements-training.txt /app/
+RUN python -m pip install --upgrade pip && \
+    pip install -r requirements-training.txt
+
+# Copy only the training code; data will be mounted at runtime
+COPY src/ /app/src/
+
+# Default command: train the HGB model and write artifacts to /app/data/...
+# NOTE: when running, mount ./data -> /app/data so relative paths "data/..." work.
+CMD ["python", "-m", "src.part5_train_hgb"]

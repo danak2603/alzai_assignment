@@ -1,0 +1,35 @@
+# --- Python / env ---
+.venv/
+env/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Jupyter / notebooks ---
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# --- IDE / OS ---
+.idea/
+.vscode/
+.DS_Store
+
+# --- Data & artifacts (generated at runtime; do not commit) ---
+data/
+!data/.gitkeep
+
+# --- Logs / cache ---
+*.log
+logs/
+.cache/
+
+# --- Docker / env files ---
+*.env

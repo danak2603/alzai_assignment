@@ -1,0 +1,27 @@
+# Build an image that serves the FastAPI inference app on port 8000
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+# System deps: OpenMP runtime for scikit-learn
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install serving requirements
+COPY requirements-serving.txt /app/
+RUN python -m pip install --upgrade pip && \
+    pip install -r requirements-serving.txt
+
+# Copy only the app code; the model artifact will be mounted under /app/data
+COPY app/ /app/app/
+
+# Default model path inside the container (can be overridden with -e MODEL_ART_PATH=...)
+ENV MODEL_ART_PATH="/app/data/clinical_synth_v1/artifacts_v1/t2d_hgb_model_v1.joblib"
+
+EXPOSE 8000
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
